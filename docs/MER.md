@@ -2,7 +2,9 @@
 
 | Versão |    Data    | Descrição                | Autor                                              | Revisão |
 | :----: | :--------: | ------------------------ | -------------------------------------------------- | ------- |
-| `1.0`  | 25/09/2023 | Criação do documento MER | [Samuel Castro](https://github.com/SamuelCastro7) |         |
+| `1.0`  | 25/09/2023 | Criação do documento MER | [Samuel Castro](https://github.com/SamuelCastro7)  |         |
+| `1.1`  | 30/09/2023 |    Atualização do MER    | [Luana Torres](https://github.com/luanatorress)    |         |
+
 
 
 # Modelo Entidade-Relacionamento (MER)
@@ -22,27 +24,50 @@ O MER é uma ferramenta essencial na modelagem de dados, permitindo uma represen
 ## 1. Entidades
 
 - **Mundo**
-- **História**
-- **Jogador**
-- **NPC**
-- **Batalha**
 - **Região**
-- **Loja**
+- **Local**
+- **Jogador**
+- **Adversário**
+- **NPC**
+  - **Mercador**
+  - **Treinador**  
+- **Batalha**
 - **Inventário**
+- **Habilidades**
 - **Equipamentos**
-  - **Poção**
-  - **Arma**  
+  - **Consumível**
+  - **Equipável**  
+  - **Melhoria**
+- **Missão**
+- **Loot**
+- **InstanciaItem**
 
 ## 2. Atributos
 
-- **Mundo**: <ins>nome_mundo</ins>;
-- **História**: <ins>ID_história</ins>;
-- **Jogador**: <ins>nome_jogador</ins>, <ins>ID_jogador</ins>, nivel, moedas, vida;
-- **NPC**: <ins>nome_npc</ins>, <ins>ID_npc</ins>, tipo_npc, nivel_npc, localização;
-- **Batalha**: <ins>ID_batalha</ins>, <ins>local_batalha</ins>, vencedor, perdedor;
-- **Loja**: <ins>nome_loja</ins>, localização, estoque;
-- **Inventário**: <ins>ID_inventário</ins>, <ins>nome_jogador</ins>, equipamento, itens;
-- **Equipamento**: <ins>Tipo_Equipamento</ins>, <ins>Nome_equipamento</ins>, atributo;
+- **Mundo**: <ins>Id_Mundo</ins>,  Nome, Historia;
+- **Região**: <ins>Nome<ins>, Descrição;
+- **Local**: <ins>Id_Local<ins>, Descrição;
+- **Jogador**:  <ins>Id_Jogador<ins>, Vida, Ataque, Resistencia, Habilidade, MissaoAtiva;
+- **Adversário**:  <ins>Id_Adversario<ins>, Vida, Ataque, Resistencia, Descricao;
+- **NPC**: <ins>Nome</ins>, Historia, Descricao;
+    - **Mercador**
+    <ins>Id_mercador</ins>, Moedas;
+    - **Treinador**
+    <ins>Id_Treinador</ins>, Moedas;
+- **Batalha**: <ins>Id_Batalha</ins>;
+- **Inventário**: <ins>.</ins>, Capacidade;
+- **Habilidade**: <ins>Id_Skill</ins>, Dano, Descricao;
+- **Equipamentos**: <ins>Id_Item</ins>, Descricao, Valor, Tipo;
+  - **Consumível**
+  <ins>.</ins>, TipoConsumivel, VidaRegenerada;
+  - **Equipável**  
+ <ins>.</ins>, TipoEquipavel, Descricao, Bonus;
+  - **Melhoria**
+  <ins>.</ins>, TipoMelhoria;
+- **Missão**: <ins>Id_Missao</ins>, Descricao, Requisito, Status;
+- **Loot**: <ins>Id_Loot</ins>;
+- **InstanciaItem**: <ins>Id_InstanciaItem</ins>;
+
 
 
 
@@ -50,5 +75,85 @@ O MER é uma ferramenta essencial na modelagem de dados, permitindo uma represen
 
 **Mundo – possui – Região**
 
-- Um mundo possui uma ou várias regiões (1,N).<br>
+- Um mundo possui uma ou várias regiões (1,N).
 - Uma região pertence a um só mundo (1,1).
+
+**Mundo – possui – Região**
+
+- Um mundo possui uma ou várias regiões (1,N).
+- Uma região pertence a um só mundo (1,1).
+
+**Regiao – possui – Local**
+
+- Uma região possui um ou vários locais (1,N).
+- Uma local pertence a uma região (1,1).
+
+**Jogador – está em – Local**
+
+- Um local tem um jogador (1,1).
+- Uma jogador está em um só local (1,1).
+
+**Local – contém – NPC**
+
+- Um local contém zero ou váriosNPCs (0,N).
+- Um NPC está em um só local (1,1).
+
+**Treinador – treina – Jogador**
+
+- Um treinador treina um joagor (1,1).
+- Um jogador é treinado por um treinador (1,1).
+
+**Jogador – treina – Habilidade**
+
+- Um jogador treina uma ou mais habilidades (1,N).
+- Uma habilidade é treinada por um ou mais jogadores (1,N).
+
+**Jogador – possui – Inventário**
+
+- Um jogador possui um inventário (1,1).
+- Um inventário pertence a um jogador (1,1).
+
+**Jogador – vende – Mercador**
+
+- Um jogador vende um ou mais mercadores (1,N).
+- Um mercador é vendido por um ou mais jogadores (1,N). -- atençao
+
+**Jogador – tem – Missao**
+
+- Um jogador tem uma missão (1,1).
+- Uma missão tem um ou mais jogadores (1,N).
+
+**Missao – desbloqueia – Missao**
+
+- Um mundo possui uma ou várias regiões (1,N).
+- Uma região pertence a um só mundo (1,1).
+
+**Missão – indica – Adversário**
+
+- Uma missão indica um adversário (1,1).
+- Um adversário é indicado por uma missão (1,1).
+
+**Adversario – está em – Local**
+
+- Um adversário está em um local (1,1).
+- Um local tem um só adversário (1,1).
+
+**Batalha – dropa – Loot**
+
+- Um adversário dropa um loot (1,1)
+- Um loot é dropado por um ou mais adversários (1,N).
+
+**Loot – possui – InstanciaItem**
+
+- Um loot possui uma ou mais InstanciaItem (1,N).
+- Uma InstanciaItem possui um loot (1,1).
+
+**Inventario – carrega – InstanciaItem**
+
+- Um inventário carrega zero ou mais InstanciaItem (0,N).
+- Uma InstanciaItem é carregada por um inventário (1,1).
+
+**InstanciaItem – tipa – Equipamento**
+
+- Uma InstanciaItem tipa zero ou mais equipamentos (0,N).
+- Um equipamento é tipado por uma InstanciaItem (1,1).
