@@ -55,15 +55,15 @@ O MER é uma ferramenta essencial na modelagem de dados, permitindo uma represen
     - **Treinador**
     <ins>Id_Treinador</ins>, Moedas;
 - **Batalha**: <ins>Id_Batalha</ins>;
-- **Inventário**: <ins>.</ins>, Capacidade;
+- **Inventário**: <ins>Id_Jogador</ins>, Capacidade;
 - **Habilidade**: <ins>Id_Skill</ins>, Dano, Descricao;
 - **Equipamentos**: <ins>Id_Item</ins>, Descricao, Valor, Tipo;
   - **Consumível**
-  <ins>.</ins>, TipoConsumivel, VidaRegenerada;
+  <ins>Id_Equipamento</ins>, TipoConsumivel, VidaRegenerada;
   - **Equipável**  
- <ins>.</ins>, TipoEquipavel, Descricao, Bonus;
+ <ins>Id_Equipamento</ins>, TipoEquipavel, Descricao, Bonus;
   - **Melhoria**
-  <ins>.</ins>, TipoMelhoria;
+  <ins>Id_Equipamento</ins>, TipoMelhoria;
 - **Missão**: <ins>Id_Missao</ins>, Descricao, Requisito, Status;
 - **Loot**: <ins>Id_Loot</ins>;
 - **InstanciaItem**: <ins>Id_InstanciaItem</ins>;
