@@ -4,6 +4,7 @@
 | :----: | :--------: | ------------------------ | -------------------------------------------------- | ------- |
 | `1.0`  | 25/09/2023 | Criação do documento MER | [Samuel Castro](https://github.com/SamuelCastro7)  |         |
 | `1.1`  | 30/09/2023 |    Atualização do MER    | [Luana Torres](https://github.com/luanatorress)    |         |
+| `1.2`  | 02/10/2023 |    Atualização do MER    | [Samuel Castro](https://github.com/SamuelCastro7)    |         |
 
 
 
@@ -62,11 +63,17 @@ O MER é uma ferramenta essencial na modelagem de dados, permitindo uma represen
   <ins>Id_Consumivel</ins>, Id_equipamento, TipoConsumivel, VidaRegenerada;
   - **Equipável**  
  <ins>Id_Equipavel</ins>, Id_equipamento, TipoEquipavel, Descricao, Bonus;
+  
   - **Melhoria**
   <ins>Id_Melhoria</ins>, Id_equipamento TipoMelhoria;
+
 - **Missão**: <ins>Id_Missao</ins>, Descricao, Requisito, Status;
 - **Loot**: <ins>Id_Loot</ins>;
 - **InstanciaItem**: <ins>Id_loot</ins>, Id_InstanciaItem;
+- **vende**: Id_jogador, Id_InstanciaItem, Id_mercador;
+- **Treino**: ID_jogador, Id_skill, Id_treinador;
+
+
 
 
 
