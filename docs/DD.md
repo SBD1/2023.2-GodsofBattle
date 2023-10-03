@@ -1,3 +1,11 @@
+## Histórico de versões
+
+| Versão |    Data    | Descrição                | Autor                                              | Revisão |
+| :----: | :--------: | ------------------------ | -------------------------------------------------- | ------- |
+| `1.0`  | 29/09/2023 | Criação do documento DER |  [Isabella Carneiro](https://github.com/isabellacgmsa)|         |
+| `1.1`  | 02/10/2023 | Criação do documento DER | [Luana Torres](https://github.com/luanatorress) e [Samuel Castro](https://github.com/SamuelCastro7) e [Thiago Vivan](https://github.com/thiago-vivan) e [Isabella Carneiro](https://github.com/isabellacgmsa)|         |
+
+
 # DD - Dicionário de dados
 
 ## Entidade: Mundo
