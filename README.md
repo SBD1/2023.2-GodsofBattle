@@ -2,6 +2,8 @@
 
 Repositório do trabalho da disciplina de Sistema de Banco de Dados 1 - FGA UnB
 
+Nesse jogo acompanharemos a jornada do protagonista, um jovem plepeu que enfrentará vários desafiantes no famoso festival sangrento para conquistar a mão da princesa.
+
 ## Alunos
 
 | Matrícula  | Aluno                                                              |
