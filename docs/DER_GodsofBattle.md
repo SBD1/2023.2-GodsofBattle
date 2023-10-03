@@ -13,7 +13,7 @@ Diagrama de Entidade e Relacionamento (DER) é uma representação gráfica do M
  </p>
 
 
-<img src= '../images/DERSBD1.png'> </img>
+<img src= '../images/DER1.drawio.png'> </img>
 
 <div style="text-align: center">
 <p>Figura 1: DER Gods of Battle</p>
