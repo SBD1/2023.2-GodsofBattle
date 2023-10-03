@@ -12,3 +12,10 @@ Nesse jogo acompanharemos a jornada do protagonista, um jovem plepeu que enfrent
 | 19/0033011 | [Luana Torres](https://github.com/luanatorress) |
 | 19/0020407 | [Thiago Vivan](https://github.com/thiago-vivan) |
 | 17/0114139 | [Samuel Castro](https://github.com/SamuelCastro7)         |
+
+<img src= '../images/FotoJogo.jpg'> </img>
+
+<div style="text-align: center">
+<p>Figura 1: Gods of Battle</p>
+<p style="margin-top: -1%; font-size: 12px">Fonte: Autores</p>
+</div>
