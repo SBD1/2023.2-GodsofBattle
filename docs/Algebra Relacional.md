@@ -1,3 +1,9 @@
+## Histórico de versões
+
+| Versão |    Data    | Descrição                | Autor                                              | Revisão |
+| :----: | :--------: | ------------------------ | -------------------------------------------------- | ------- |
+| `1.0`  | 30/10/2023 | Criação do documento e adição de consultas iniciais |  [Isabella Carneiro](https://github.com/isabellacgmsa)|         |
+
 # Álgebra Relacional
 ##  Todos os jogadores que estão em uma determinada região (Região1).
   ```sql
