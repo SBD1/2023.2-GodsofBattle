@@ -22,15 +22,15 @@
 
 ## Todas as missões ativas de jogadores e missões concluídas de jogadores e suas descrições.
   ```sql
-  π(Id_Missao, Descricao)(Jogador ⨝ Missao ⨝ (σ(MissaoAtiva = 'Ativa' ∪ MissaoAtiva = 'Concluída')(Jogador)))
+  π(Id_Missao, Descricao)(Jogador ⨝ Missao ⨝ (σ(Missao.status = 'Ativa' ∪ Missao.status = 'Concluída')(Jogador)))
   ```
 
 ## Jogadores que não têm uma missão ativa.
   ```sql
-  π(Id_Jogador)(Jogador) - π(Id_Jogador)(Jogador ⨝ (σ(MissaoAtiva = 'Ativa')(Jogador)))
+  π(Id_Jogador)(Jogador) - π(Id_Jogador)(Jogador ⨝ (σ(Missao.status = 'Ativa')(Jogador)))
   ```
 
 ## Jogadores que têm uma missão ativa e sua respectiva missão com descrição.
   ```sql
-  π(Jogador.Id_Jogador, Jogador.Vida, Missao.Descricao)(Jogador ⨝ (σ(MissaoAtiva = 'Ativa')(Jogador.Missao)))
+  π(Jogador.Id_Jogador, Jogador.Vida, Missao.Descricao)(Jogador ⨝ (σ(Missao.status = 'Ativa')(Jogador.Missao)))
   ```
