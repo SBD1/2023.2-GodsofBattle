@@ -34,4 +34,12 @@ Portanto, prepare-se para uma experiência de jogo envolvente, repleta de desafi
   - [MREL](docs/MREL.md)
   - [Dicionário de Dados](docs/DD.md)
   - [Apresentação Módulo 1](https://youtu.be/X5O2wmfOD_U)
+
+- Módulo 2
+  - [normalização](docs/normalizacao/normalizacao-projeto.md)
+  - [ddl](docs/ddl.sql)
+  - [dml](docs/dml.sql)
+  - [Querrys](docs/Querrys.sql)
+  - [Apresentação Módulo 2](https://youtu.be/X5O2wmfOD_U)
+  
   
