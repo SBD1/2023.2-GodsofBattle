@@ -40,6 +40,6 @@ Portanto, prepare-se para uma experiência de jogo envolvente, repleta de desafi
   - [ddl](docs/ddl.sql)
   - [dml](docs/dml.sql)
   - [Querrys](docs/Querrys.sql)
-  - [Apresentação Módulo 2](https://youtu.be/X5O2wmfOD_U)
+  - [Apresentação Módulo 2](https://youtu.be/OiPhV-xbBik)
   
   
