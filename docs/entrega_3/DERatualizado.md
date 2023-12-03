@@ -4,6 +4,7 @@
 | :----: | :--------: | ------------------------ | -------------------------------------------------- | ------- |
 | `1.0`  | 23/09/2023 | Criação do documento DER | [Luana Torres](https://github.com/luanatorress) e [Samuel Castro](https://github.com/SamuelCastro7) e [Thiago Vivan](https://github.com/thiago-vivan)|         |
 | `1.1`  | 24/09/2023 | Atualização do DER | [Isabella Carneiro](https://github.com/isabellacgmsa) e [Samuel Castro](https://github.com/SamuelCastro7) e [Luana Torres](https://github.com/luanatorress) |         |
+| `1.2`  | 24/09/2023 | Atualização do DER | [Luana Torres](https://github.com/luanatorress) |         |
 
 # Diagrama Entidade-Relacionamento
 
@@ -13,7 +14,7 @@ Diagrama de Entidade e Relacionamento (DER) é uma representação gráfica do M
  </p>
 
 
-<img src= '../images/DER1.drawio.png'> </img>
+<img src= '../../images/DERatualizado.drawio.png'> </img>
 
 <div style="text-align: center">
 <p>Figura 1: DER Gods of Battle</p>
