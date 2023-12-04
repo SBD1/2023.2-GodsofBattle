@@ -1,5 +1,7 @@
 # game.py
 
+import psycopg2
+
 from classes import Mundo, Regiao, Local, Jogador, Adversario, Mercador, Treinador, Inventario, InstanciaItem
 
 def apresentacao():
@@ -46,7 +48,20 @@ if __name__ == "__main__":
         # Agora você pode usar jogador_principal em outras partes do seu código
         print(f"{jogador_principal.nome}, você está no {local_inicial.descricao}.")
     elif escolha == "2":
-        print("Carregando Jogo... (funcionalidade ainda não implementada)")
+        conn = psycopg2.connect(
+            host="localhost",
+            database="postgres",
+            user="postgres",
+            password="postgres"
+        )
+    
+        cursor = conn.cursor()
+    
+        cursor.execute("SELECT Nome FROM Mundo")
+
+        dado = cursor.fetchone()
+        print(dado)
+        ##print("Carregando Jogo... (funcionalidade ainda não implementada)")
     elif escolha == "3":
         print("Ajuda... (funcionalidade ainda não implementada)")
     elif escolha == "4":

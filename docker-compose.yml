@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  gameGods:
+    image: gods-game
+    container_name: gods-game
+    build:
+      context: .
+      dockerfile: gameDockerfile
+    entrypoint: "tail -f /dev/null"
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - postgres-connection
+
+  db:
+    container_name: postgres_container
+    build: 
+      context: .
+      dockerfile: databaseDockerfile
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    restart: always
+    networks:
+      - postgres-connection
+
+
+networks:
+  postgres-connection:
+    driver: bridge
