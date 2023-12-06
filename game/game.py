@@ -24,20 +24,28 @@ class Game:
     def iniciar_jogo(self):
         print("Iniciando o jogo...\n")
 
+        self.jogador_id = DataBase.create_new_player(self.connection)
+
+        print(f"Bem-vindo ao jogo, Jogador {self.jogador_id}!\n")
+        arena_pebleus = Arena(self.jogador, adversarios_pebleus, treinadores_pebleus)
+        arena_pebleus.iniciar_desafio()
         
-        self.jogador = DataBase.create_new_player(self.connection)
-        
-        print(f"Bem-vindo ao jogo, {self.jogador}!\n")
-    
-        
+    def exibir_status_jogador(self):
+        jogador_details = DataBase.get_player_details(self.connection, self.jogador_id)
+        if jogador_details:
+            print(f"Detalhes do Jogador:\n{jogador_details}")
+        else:
+            print("Erro ao obter detalhes do jogador.")        
 
 if __name__ == "__main__":
     game_instance = Game()  # Crie uma instância da classe Game
     game_instance.apresentacao()
+    
     escolha = input("Escolha uma opção: ")
 
     if escolha == "1":
         game_instance.iniciar_jogo()
+        game_instance.exibir_status_jogador()
     elif escolha == "2":
         print("Carregando Jogo... (funcionalidade ainda não implementada)")
     elif escolha == "3":

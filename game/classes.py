@@ -40,6 +40,9 @@ class Local:
 
 
 class Jogador:
+    def __str__(self):
+        return f"Jogador {self.nome}: Vida={self.vida}, Ataque={self.ataque}, Resistencia={self.resistencia}, Habilidade={self.habilidade}, Missao Ativa={self.missao_ativa}"
+
     def __init__(self, id_jogador, nome, vida, ataque, resistencia, habilidade, missao_ativa=None):
         self.id_jogador = id_jogador
         self.nome = nome
@@ -112,3 +115,93 @@ class Inventario:
     def adicionar_instancia_item(self, instancia_item):
         # Lógica para adicionar uma instância de item ao inventário
         self.instancias_itens.append(instancia_item)
+
+class Arena:
+    def __init__(self, jogador, adversarios, treinadores):
+        self.jogador = jogador
+        self.adversarios = adversarios
+        self.treinadores = treinadores
+
+    def iniciar_desafio(self):
+        print("Bem-vindo à Arena do Reino dos Pebleus!")
+        print("Escolha uma opção:")
+        print("1 - Lutar contra um adversário")
+        print("2 - Treinar com um mestre")
+        print("3 - Ver status do jogador")
+        print("4 - Sair da Arena")
+
+        escolha = input("Escolha uma opção: ")
+
+        if escolha == "1":
+            self.iniciar_batalha()
+        elif escolha == "2":
+            self.treinar_com_mestre()
+        elif escolha == "3":
+            self.jogador.exibir_status()
+            self.iniciar_desafio()
+        elif escolha == "4":
+            print("Saindo da Arena...")
+        else:
+            print("Opção inválida. Tente novamente.")
+            self.iniciar_desafio()
+
+    def iniciar_batalha(self):
+        # Lógica para iniciar uma batalha
+        # Pode escolher um adversário aleatório ou permitir ao jogador escolher
+        adversario = random.choice(self.adversarios)
+        
+        print(f"Você está enfrentando: {adversario.descricao}")
+        print("Escolha uma ação:")
+        print("1 - Atacar")
+        print("2 - Defender")
+        print("3 - Desistir")
+
+        escolha = input("Escolha uma opção: ")
+
+        if escolha == "1":
+            derrotou_adversario = Comandos.atacar(self.jogador, adversario)
+            if derrotou_adversario:
+                # Lógica para o jogador vencer a batalha
+                pass
+            else:
+                # Lógica para permitir que o adversário contra-ataque
+                pass
+        elif escolha == "2":
+            Comandos.defender(self.jogador)
+            # Lógica para permitir que o adversário ataque enquanto o jogador está defendendo
+        elif escolha == "3":
+            print("Você desistiu da batalha.")
+            # Lógica para sair da batalha
+        else:
+            print("Opção inválida. Tente novamente.")
+            self.iniciar_batalha()
+            
+    def treinar_com_mestre(self):
+        # Lógica para treinar com um treinador
+        # Pode escolher um treinador aleatório ou permitir ao jogador escolher
+        treinador = random.choice(self.treinadores)
+        treinador.treinar_jogador(self.jogador)
+        self.iniciar_desafio()
+
+class Comandos:
+    @staticmethod
+    def atacar(jogador, adversario):
+        # Lógica para ataque
+        dano = jogador.ataque - adversario.resistencia
+        adversario.vida -= dano
+        print(f"Você ataca o adversário e causa {dano} de dano!")
+
+        if adversario.vida <= 0:
+            print("Você derrotou o adversário!")
+            return True  # Indica que o adversário foi derrotado
+        else:
+            print(f"O adversário agora tem {adversario.vida} de vida.")
+            return False  # Indica que o adversário ainda está vivo
+
+    @staticmethod
+    def defender(jogador):
+        # Lógica para defesa
+        jogador.resistencia += 5
+        print("Você está se defendendo. Sua resistência aumentou!")
+
+    # Adicione mais métodos para outros comandos, se necessário
