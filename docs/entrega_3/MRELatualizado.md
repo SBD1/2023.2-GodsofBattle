@@ -14,7 +14,7 @@ O Modelo Relacional apresenta um diagrama lógico da forma em que as entidades e
 ## 1. Diagrama
 
 
-<img src= '../../images/MRELatualizado.drawio.png'> </img>
+<img src= '../../images/MRELatualizado.jpg'> </img>
 
 <div style="text-align: center">
 <p>Figura 1: MREL Gods of Battle</p>
