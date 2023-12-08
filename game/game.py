@@ -9,6 +9,7 @@ class Game:
     def __init__(self):
         self.connection = DataBase.create_connection()
         self.jogador = Jogador(-1, -1, -1, -1, -1, -1, -1)
+        self.cursor = self.connection.cursor()
 
     @staticmethod
     def apresentacao():
@@ -26,22 +27,31 @@ class Game:
 
         self.jogador_id = DataBase.create_new_player(self.connection)
 
-        print(f"Bem-vindo ao jogo, Jogador {self.jogador_id}!\n")
-        arena_pebleus = Arena(self.jogador, adversarios_pebleus, treinadores_pebleus)
-        arena_pebleus.iniciar_desafio()
-        
+        print(f"Bem-vindo ao jogo, Jogador seu id é: {self.jogador_id}!\n")
+
+        missao = DataBase.get_missao_details(self.connection, 1)
+        print(f"Missão: {missao[1]}")
+    #    arena_pebleus = Arena(self.jogador, adversarios_pebleus, treinadores_pebleus)
+    #    arena_pebleus.iniciar_desafio()
+
+
     def exibir_status_jogador(self):
         jogador_details = DataBase.get_player_details(self.connection, self.jogador_id)
         if jogador_details:
-            print(f"Detalhes do Jogador:\n{jogador_details}")
+            print(f"Detalhes do Jogador:\n")
+            print(f"Id: {jogador_details[0]}")
+            print(f"Vida: {jogador_details[1]}")
+            print(f"Ataque: {jogador_details[2]}")
+            print(f"Resistência: {jogador_details[3]}")
+
         else:
             print("Erro ao obter detalhes do jogador.")        
 
 if __name__ == "__main__":
-    game_instance = Game()  # Crie uma instância da classe Game
+    game_instance = Game()  
     game_instance.apresentacao()
     
-    escolha = input("Escolha uma opção: ")
+    escolha = input(">> ")
 
     if escolha == "1":
         game_instance.iniciar_jogo()

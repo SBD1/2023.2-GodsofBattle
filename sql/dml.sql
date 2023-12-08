@@ -30,14 +30,40 @@ INSERT INTO Local (Id_Local, Nome, Descricao, Id_Regiao) VALUES (default, 'Arena
 INSERT INTO Local (Id_Local, Nome, Descricao, Id_Regiao) VALUES (default, 'Arena Distrito da Prata', 'Uma Arena construída com madeira ornamentada de forma preciosista e cheia de detalhes, onde as batalhas entre alguns dos sujeitos mais ricos do reino vão acontecer.', 'Distrito da Prata'); 
 
 -- Inserir dados na tabela Adversario
-INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (1, 50, 10, 5, 'Cleiton vendedor de repolhos', 4);
---INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (2, 70, 15, 8, 'Orc das Montanhas', 2);
---INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (3, 90, 20, 10, 'Guardião da Floresta', 3);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (1, 50, 10, 5, 'João, Trabalhador Rural', 4);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (2, 70, 15, 8, 'Mendigo Combativo', 4);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (3, 90, 20, 10, 'Willian, Vendedor de Frutas', 4);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (4, 60, 12, 6, 'Carlos, Trombadinha de Rua', 4);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (5, 80, 18, 9, 'Marcio, Dono da Taverna Copo Sujo', 4);
+
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (6, 100, 22, 12, 'Dr. Rodrigo, Médico Ilustre', 5);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (7, 70, 15, 8, 'Eng. Roger, Construtor Renomado', 5);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (8, 90, 20, 10, 'Fabiano, Comerciante de Pedras preciosas', 5);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (9, 110, 25, 14, 'Julio, Advogado de Sucesso', 5);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (10, 80, 18, 9, 'Renato, Filho do Banqueiro', 5);
+
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (11, 100, 22, 12, 'Duque Guilherme, Nobre Renomado', 3);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (12, 120, 28, 16, 'Duque Alfredo, Irmão mais velho do Duque Guilherme', 3);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (13, 90, 20, 10, 'Barão Maurício, O maior detentor de terras do reino', 3);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (14, 110, 25, 14, 'Conde Ricardo, Guerreiro Experiente e capitão da guarda real', 3);
+INSERT INTO Adversario (Id_Adversario, Vida, Ataque, Resistencia, Descricao, Id_Local) VALUES (15, 130, 30, 18, 'Príncipe Alexander, Herdeiro do reino vizinho', 3);
 
 -- Inserir dados na tabela Missao 
-INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (1, 'Faça sua primeira luta na arena de Barro', 0, 1, NULL);
---INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (2, 'Derrote o Orc das Montanhas', 0, 2, 1);
---INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (3, 'Supere o Guardião da Floresta', 0, 3, 2);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (1, 'Desafie João, Trabalhador Rural', 0, 1, NULL);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (2, 'Supere o Mendigo Combativo', 0, 2, 1);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (3, 'Derrote Willian, Vendedor de Frutas', 0, 3, 2);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (4, 'Vença Carlos, Trombadinha de Rua', 0, 4, 3);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (5, 'Conquiste Marcio, Dono da Taverna Copo Sujo', 0, 5, 4);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (6, 'Desafie Dr. Rodrigo, Médico Ilustre', 0, 6, 5);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (7, 'Supere Eng. Roger, Construtor Renomado', 0, 7, 6);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (8, 'Derrote Fabiano, Comerciante de Pedras preciosas', 0, 8, 7);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (9, 'Vença Julio, Advogado de Sucesso', 0, 9, 8);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (10, 'Conquiste Renato, Filho do Banqueiro', 0, 10, 9);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (11, 'Desafie Duque Guilherme, Nobre Renomado', 0, 11, 10);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (12, 'Supere Duque Alfredo, Irmão mais velho do Duque Guilherme', 0, 12, 11);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (13, 'Derrote Barão Maurício, O maior detentor de terras do reino', 0, 13, 12);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (14, 'Vença Conde Ricardo, Guerreiro Experiente e capitão da guarda real', 0, 14, 13);
+INSERT INTO Missao (Id_Missao, DescricaoMissao, Status, Id_Adversario, Id_MissaoRequisito) VALUES (15, 'Conquiste Príncipe Alexander, Herdeiro do reino vizinho', 0, 15, 14);
 
 -- Inserir dados na tabela Jogador
 -- INSERT INTO Jogador (Id_Jogador, Vida, Ataque, Resistencia, Habilidade, Id_Local, Id_Missao) VALUES (1, 100, 20, 10, 5, 1, 1);

@@ -41,6 +41,10 @@ class DataBase():
         params = (player_id,)
         return DataBase.execute_query(connection, query, params, fetchone=True)
 
+    def get_missao_details(connection, missao_id):
+        query = "SELECT * FROM Missao WHERE Id_Missao = %s;"
+        params = (missao_id,)
+        return DataBase.execute_query(connection, query, params, fetchone=True)
 
 #Testando a classe de criar jogador já com o inventário acoplado.
 
