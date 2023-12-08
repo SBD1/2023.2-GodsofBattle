@@ -105,7 +105,7 @@ class Missao:
         self.status = status
         self.id_adversario = id_adversario
         self.id_missao_requisito = id_missao_requisitoS
-
+ 
 
 class Treinador(NPC):
     def __init__(self, id_treinador, nome, historia, descricao, moedas):
@@ -150,7 +150,18 @@ class Arena:
         elif escolha == "2":
             self.treinar_com_mestre()
         elif escolha == "3":
-            self.jogador.exibir_status()
+            def exibir_status_jogador(self):
+                jogador_details = DataBase.get_player_details(self.connection, self.jogador_id)
+                if jogador_details:
+                    print(f"Detalhes do Jogador:\n")
+                    print(f"Id: {jogador_details[0]}")
+                    print(f"Vida: {jogador_details[1]}")
+                    print(f"Ataque: {jogador_details[2]}")
+                    print(f"Resistência: {jogador_details[3]}")
+
+                else:
+                    print("Erro ao obter detalhes do jogador.")
+                    
             self.iniciar_desafio()
         elif escolha == "4":
             print("Saindo da Arena...")
