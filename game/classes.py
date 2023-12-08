@@ -46,7 +46,7 @@ class Jogador:
     def __str__(self):
         return f"Jogador {self.nome}: Vida={self.vida}, Ataque={self.ataque}, Resistencia={self.resistencia}, Habilidade={self.habilidade}, Missao Ativa={self.missao_ativa}"
 
-    def __init__(self, id_jogador, nome, vida, ataque, resistencia, habilidade, missao_ativa=None):
+    def __init__(self, id_jogador, nome, vida, ataque, resistencia, habilidade, moedas, missao_ativa=None):
         self.id_jogador = id_jogador
         self.nome = nome
         self.vida = vida
@@ -55,12 +55,14 @@ class Jogador:
         self.habilidade = habilidade
         self.missao_ativa = missao_ativa
         self.inventario = Inventario()
+        self.moedas = moedas
 
     def adicionar_instancia_item(self, instancia_item):
         self.inventario.adicionar_instancia_item(instancia_item)
 
     def treinar_habilidade(self, habilidade):
-        # Lógica para treinar a habilidade do jogador
+        self.habilidade += 1  # Aumenta a habilidade do jogador
+        print(f"Sua habilidade agora é {self.habilidade}.")
         pass
 
     def participar_batalha(self, adversario):
@@ -112,6 +114,17 @@ class Treinador(NPC):
         super().__init__(nome, historia, descricao)
         self.id_treinador = id_treinador
         self.moedas = moedas
+
+    def treinar_jogador(self, jogador, habilidade):
+        custo_treinamento = 10  # Defina o custo como necessário
+        if jogador.moedas >= custo_treinamento:
+            jogador.treinar_habilidade(habilidade)
+            jogador.moedas -= custo_treinamento
+            print(f"Você treinou sua habilidade {habilidade} com {self.nome}.")
+            print(f"Você agora tem {jogador.moedas} moedas.")
+        else:
+            print("Você não tem moedas suficientes para treinar.")
+
 
     def treinar_jogador(self, jogador, habilidade):
         # Lógica para treinar o jogador
@@ -168,7 +181,25 @@ class Arena:
         else:
             print("Opção inválida. Tente novamente.")
             self.iniciar_desafio()
-            
+
+    def treinar_com_mestre(self):
+        print("Escolha um mestre para treinar:")
+        for i, treinador in enumerate(self.treinadores, start=1):
+            print(f"{i}. {treinador.nome}")
+
+        try:
+            escolha_treinador = int(input("Escolha um mestre (digite o número): "))
+            if 1 <= escolha_treinador <= len(self.treinadores):
+                treinador_escolhido = self.treinadores[escolha_treinador - 1]
+                treinador_escolhido.treinar_jogador(self.jogador)
+                self.iniciar_desafio()
+            else:
+                print("Escolha inválida. Tente novamente.")
+                self.treinar_com_mestre()
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um número.")
+            self.treinar_com_mestre()
+
     def iniciar_batalha(self):
         # Lógica para iniciar uma batalha
         # Pode escolher um adversário aleatório ou permitir ao jogador escolher
@@ -210,11 +241,18 @@ class Arena:
         return detalhes_adversario
 
     def treinar_com_mestre(self):
-        # Lógica para treinar com um treinador
-        # Pode escolher um treinador aleatório ou permitir ao jogador escolher
-        treinador = random.choice(self.treinadores)
-        treinador.treinar_jogador(self.jogador)
-        self.iniciar_desafio()
+        print("Escolha um treinador para treinar:")
+        for i, treinador in enumerate(self.treinadores, start=1):
+            print(f"{i}. {treinador.nome}")
+
+        escolha_treinador = int(input("Escolha um treinador (digite o número): "))
+        if 1 <= escolha_treinador <= len(self.treinadores):
+            treinador_escolhido = self.treinadores[escolha_treinador - 1]
+            treinador_escolhido.treinar_jogador(self.jogador)
+            self.iniciar_desafio()
+        else:
+            print("Escolha inválida. Tente novamente.")
+            self.treinar_com_mestre()
 
 class Comandos:
     @staticmethod

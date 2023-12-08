@@ -46,6 +46,23 @@ class DataBase:
         return DataBase.execute_query(connection, query, params, fetchone=True)
 
     @staticmethod
+    def treinar_com_mestre(connection, jogador_id, custo_treinamento):
+        # Verifique se o jogador tem moedas suficientes para treinar
+        jogador_detalhes = DataBase.get_player_details(connection, jogador_id)
+        moedas_jogador = jogador_detalhes[6]  # Assumindo que o número de moedas está na posição 6, ajuste conforme necessário
+
+        if moedas_jogador >= custo_treinamento:
+            # Atualize o número de moedas do jogador após o treinamento
+            novo_saldo_moedas = moedas_jogador - custo_treinamento
+            query = "UPDATE Jogador SET Moedas = %s WHERE Id_Jogador = %s;"
+            params = (novo_saldo_moedas, jogador_id)
+            DataBase.execute_query(connection, query, params)
+            return True  # Indica que o treinamento foi bem-sucedido
+        else:
+            return False  # Indica que o jogador não tem moedas suficientes para treinar
+
+
+    @staticmethod
     def get_adversario_details(connection, adversario_id):
         # Lógica para obter detalhes do adversário com base no ID
         # Substitua isso pela lógica real de consulta ao banco de dados
