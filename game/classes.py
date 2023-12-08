@@ -1,4 +1,7 @@
-# classes.py
+#classes.py
+
+from database import DataBase
+import random
 import psycopg2
 
 class InstanciaItem:
@@ -95,6 +98,14 @@ class Mercador(NPC):
         # Lógica para vender um item ao jogador
         jogador.adicionar_instancia_item(instancia_item)
 
+class Missao:
+    def __init__(self, id_missao, descricao_missao, status, id_adversario, id_missao_requisito=None):
+        self.id_missao = id_missao
+        self.descricao_missao = descricao_missao
+        self.status = status
+        self.id_adversario = id_adversario
+        self.id_missao_requisito = id_missao_requisitoS
+
 
 class Treinador(NPC):
     def __init__(self, id_treinador, nome, historia, descricao, moedas):
@@ -117,10 +128,12 @@ class Inventario:
         self.instancias_itens.append(instancia_item)
 
 class Arena:
-    def __init__(self, jogador, adversarios, treinadores):
+    def __init__(self, jogador, adversarios, connection):
         self.jogador = jogador
         self.adversarios = adversarios
-        self.treinadores = treinadores
+        self.connection = connection
+        self.treinadores = []
+  
 
     def iniciar_desafio(self):
         print("Bem-vindo à Arena do Reino dos Pebleus!")
@@ -144,13 +157,14 @@ class Arena:
         else:
             print("Opção inválida. Tente novamente.")
             self.iniciar_desafio()
-
+            
     def iniciar_batalha(self):
         # Lógica para iniciar uma batalha
         # Pode escolher um adversário aleatório ou permitir ao jogador escolher
-        adversario = random.choice(self.adversarios)
-        
-        print(f"Você está enfrentando: {adversario.descricao}")
+        adversario = self.escolher_adversario_missao()  # Adicione esta linha
+        batalha = Batalha(self.jogador, adversario)
+        batalha.iniciar()
+        print(f"Você está enfrentando: {adversario[1]}")
         print("Escolha uma ação:")
         print("1 - Atacar")
         print("2 - Defender")
@@ -175,7 +189,15 @@ class Arena:
         else:
             print("Opção inválida. Tente novamente.")
             self.iniciar_batalha()
-            
+
+
+
+    def escolher_adversario_missao(self):
+        missao = DataBase.get_missao_details(self.connection, 1)
+        id_adversario = missao[4]
+        detalhes_adversario = DataBase.get_adversario_details(self.connection, id_adversario)
+        return detalhes_adversario
+
     def treinar_com_mestre(self):
         # Lógica para treinar com um treinador
         # Pode escolher um treinador aleatório ou permitir ao jogador escolher
@@ -205,3 +227,13 @@ class Comandos:
         print("Você está se defendendo. Sua resistência aumentou!")
 
     # Adicione mais métodos para outros comandos, se necessário
+
+class Batalha:
+    def __init__(self, jogador, adversarios):
+        self.jogador = jogador
+        self.adversarios = adversarios
+
+    def iniciar(self):
+        print("Batalha iniciada!")
+
+    # Adicione métodos relevantes para a lógica de batalha, como ataques, defesas, etc.

@@ -1,11 +1,9 @@
-#database.py
-
 import psycopg2
 import pandas as pd
-from classes import *
 import random
 
-class DataBase():
+class DataBase:
+    @staticmethod
     def create_connection():
         connect = psycopg2.connect(
             host="localhost",
@@ -41,11 +39,21 @@ class DataBase():
         params = (player_id,)
         return DataBase.execute_query(connection, query, params, fetchone=True)
 
+    @staticmethod
     def get_missao_details(connection, missao_id):
         query = "SELECT * FROM Missao WHERE Id_Missao = %s;"
         params = (missao_id,)
         return DataBase.execute_query(connection, query, params, fetchone=True)
 
+    @staticmethod
+    def get_adversario_details(connection, adversario_id):
+        # Lógica para obter detalhes do adversário com base no ID
+        # Substitua isso pela lógica real de consulta ao banco de dados
+        query = f"SELECT * FROM Adversario WHERE Id_Adversario = {adversario_id}"
+        cursor = connection.cursor()
+        cursor.execute(query)
+        detalhes_adversario = cursor.fetchone()
+        return detalhes_adversario
 #Testando a classe de criar jogador já com o inventário acoplado.
 
     

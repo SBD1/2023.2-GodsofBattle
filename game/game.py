@@ -30,10 +30,15 @@ class Game:
         print(f"Bem-vindo ao jogo, Jogador seu id é: {self.jogador_id}!\n")
 
         missao = DataBase.get_missao_details(self.connection, 1)
-        print(f"Missão: {missao[1]}")
-    #    arena_pebleus = Arena(self.jogador, adversarios_pebleus, treinadores_pebleus)
-    #    arena_pebleus.iniciar_desafio()
+        id_adversario = missao[4]  # Assumindo que o id do adversário está na posição 3, ajuste conforme necessário
+        detalhes_adversario = DataBase.get_adversario_details(self.connection, id_adversario)
 
+        print(f"Missão: {missao[1]}")
+        print(f"Desafie {detalhes_adversario[2]}")
+
+        # Agora, você pode criar a arena com o adversário da missão
+        arena_pebleus = Arena(self.jogador_id, [detalhes_adversario], self.connection)
+        arena_pebleus.iniciar_desafio()
 
     def exibir_status_jogador(self):
         jogador_details = DataBase.get_player_details(self.connection, self.jogador_id)
