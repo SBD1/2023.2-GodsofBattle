@@ -44,11 +44,10 @@ class Local:
 
 class Jogador:
     def __str__(self):
-        return f"Jogador {self.nome}: Vida={self.vida}, Ataque={self.ataque}, Resistencia={self.resistencia}, Habilidade={self.habilidade}, Missao Ativa={self.missao_ativa}"
+        return f"Jogador {self.id_jogador}: Vida={self.vida}, Ataque={self.ataque}, Resistencia={self.resistencia}, Habilidade={self.habilidade}, Missao Ativa={self.missao_ativa}"
 
-    def __init__(self, id_jogador, nome, vida, ataque, resistencia, habilidade, moedas, missao_ativa=None):
+    def __init__(self, id_jogador, vida, ataque, resistencia, habilidade, missao_ativa=None):
         self.id_jogador = id_jogador
-        self.nome = nome
         self.vida = vida
         self.ataque = ataque
         self.resistencia = resistencia

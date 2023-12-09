@@ -3,13 +3,29 @@
 import psycopg2
 from database import DataBase
 from classes import *
+import os
+import sys
+
 
 
 class Game:
     def __init__(self):
         self.connection = DataBase.create_connection()
-        self.jogador = Jogador(-1, -1, -1, -1, -1, -1, -1)
+        self.jogador = Jogador(-1, -1, -1, -1, -1, -1)
         self.cursor = self.connection.cursor()
+
+
+    def logo(self):
+        print("\n " * 10)
+        print("   ______                _     _                   _          _____                                                 _           ")
+        print("  |  ____|              | |   (_)                 | |        / ____|                                               | |          ")
+        print("  | |__      ___   ___  | |_   _  __   __   __ _  | |       | (___     __ _   _ __     __ _   _ __    ___   _ __   | |_    ___  ")
+        print("  |  __|    / _ \ / __| | __| | | \ \ / /  / _` | | |        \___ \   / _` | | '_ \   / _` | | '__|  / _ \ | '_ \  | __|  / _ \ ")
+        print("  | |      |  __/ \__ \ | |_  | |  \ V /  | (_| | | |        ____) | | (_| | | | | | | (_| | | |    |  __/ | | | | | |_  | (_) |")
+        print("  |_|       \___| |___/  \__| |_|   \_/    \__,_| |_|       |_____/   \__,_| |_| |_|  \__, | |_|     \___| |_| |_|  \__|  \___/ ")
+        print("                                                                                       __/ |                                    ")
+        print("                                                                                      |___/                                     ")
+        print("\n ")
 
     @staticmethod
     def apresentacao():
@@ -54,18 +70,18 @@ class Game:
 
 if __name__ == "__main__":
     game_instance = Game()  
+    game_instance.logo()
     game_instance.apresentacao()
-    
+
     escolha = input(">> ")
 
     if escolha == "1":
         game_instance.iniciar_jogo()
-        game_instance.exibir_status_jogador()
     elif escolha == "2":
-        print("Carregando Jogo... (funcionalidade ainda não implementada)")
+        print("Carregando Jogo... (funcionalidade ainda não implementada)\n")
     elif escolha == "3":
-        print("Ajuda... (funcionalidade ainda não implementada)")
+        print("Ajuda... (funcionalidade ainda não implementada)\n")
     elif escolha == "4":
-        print("Saindo do Jogo...")
+        print("Saindo do Jogo...\n")
     else:
         print("Opção inválida. Saindo do Jogo...")
