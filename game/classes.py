@@ -149,12 +149,15 @@ class Arena:
     
     def exibir_status_jogador(self):
         jogador_details = DataBase.get_player_details(self.connection, self.jogador)
+        missao_details = DataBase.get_missao_details(self.connection, jogador_details[6])
         if jogador_details:
             print(f"\n Detalhes do Jogador:\n")
             print(f"Id: {jogador_details[0]}")
             print(f"Vida: {jogador_details[1]}")
             print(f"Ataque: {jogador_details[2]}")
-            print(f"Resistência: {jogador_details[3]}\n")
+            print(f"Resistência: {jogador_details[3]}")
+            print(f"Missao Ativa: {missao_details[1]}\n")
+
         else:
             print("Erro ao obter detalhes do jogador.")
   

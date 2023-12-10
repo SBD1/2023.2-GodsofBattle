@@ -57,19 +57,6 @@ class Game:
         arena_pebleus = Arena(self.jogador_id, [detalhes_adversario], self.connection)
         arena_pebleus.iniciar_desafio()
 
-    def exibir_status_jogador(self):
-        jogador_details = DataBase.get_player_details(self.connection, self.jogador_id)
-        if jogador_details:
-            print(f"Detalhes do Jogador:\n")
-            print(f"Id: {jogador_details[0]}")
-            print(f"Vida: {jogador_details[1]}")
-            print(f"Ataque: {jogador_details[2]}")
-            print(f"Resistência: {jogador_details[3]}")
-            print(f"Missao Ativa: {jogador_details[6]}")
-
-        else:
-            print("Erro ao obter detalhes do jogador.")        
-
 if __name__ == "__main__":
     game_instance = Game()  
     game_instance.logo()
