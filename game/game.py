@@ -11,7 +11,7 @@ import sys
 class Game:
     def __init__(self):
         self.connection = DataBase.create_connection()
-        self.jogador = Jogador(-1, -1, -1, -1, -1, -1)
+        self.jogador = Jogador(-1, -1, -1, -1, -1, -1, -1)
         self.cursor = self.connection.cursor()
 
 
@@ -46,13 +46,14 @@ class Game:
         print(f"Bem-vindo ao jogo, Jogador seu id é: {self.jogador_id}!\n")
 
         missao = DataBase.get_missao_details(self.connection, 1)
-        id_adversario = missao[4]  # Assumindo que o id do adversário está na posição 3, ajuste conforme necessário
+        id_adversario = missao[4]  
         detalhes_adversario = DataBase.get_adversario_details(self.connection, id_adversario)
+        print(f"Você recebeu uma nova missão: {missao[1]}\n")
+        DataBase.att_missao_ativa(self.connection, missao[0], self.jogador_id)
 
-        print(f"Missão: {missao[1]}")
-        print(f"Desafie {detalhes_adversario[2]}")
+        print("Sua inscrição no festival foi bem sucedida e sua primeira batalha já ira começar!\n")
+        print("Você vai em direção da nova estrutura chamativa construida no meio do distrito de barro.\n")
 
-        # Agora, você pode criar a arena com o adversário da missão
         arena_pebleus = Arena(self.jogador_id, [detalhes_adversario], self.connection)
         arena_pebleus.iniciar_desafio()
 
@@ -64,6 +65,7 @@ class Game:
             print(f"Vida: {jogador_details[1]}")
             print(f"Ataque: {jogador_details[2]}")
             print(f"Resistência: {jogador_details[3]}")
+            print(f"Missao Ativa: {jogador_details[6]}")
 
         else:
             print("Erro ao obter detalhes do jogador.")        

@@ -46,6 +46,12 @@ class DataBase:
         return DataBase.execute_query(connection, query, params, fetchone=True)
 
     @staticmethod
+    def att_missao_ativa(connection, missao_id, jogador_id):
+        query = "UPDATE Jogador SET Id_Missao = %s WHERE Id_Jogador = %s;"
+        params = (missao_id, jogador_id)
+        DataBase.execute_query(connection, query, params)
+
+    @staticmethod
     def treinar_com_mestre(connection, jogador_id, custo_treinamento):
         # Verifique se o jogador tem moedas suficientes para treinar
         jogador_detalhes = DataBase.get_player_details(connection, jogador_id)
@@ -71,6 +77,17 @@ class DataBase:
         cursor.execute(query)
         detalhes_adversario = cursor.fetchone()
         return detalhes_adversario
+
+    @staticmethod
+    def get_arena_details(connection, arena_id):
+        # Lógica para obter detalhes da arena com base no ID
+        # Substitua isso pela lógica real de consulta ao banco de dados
+        query = f"SELECT Descricao FROM Local WHERE Id_Local = {arena_id}"
+        cursor = connection.cursor()
+        cursor.execute(query)
+        detalhes_arena = cursor.fetchone()
+        print(f"{detalhes_arena[0]}")
+
 #Testando a classe de criar jogador já com o inventário acoplado.
 
     

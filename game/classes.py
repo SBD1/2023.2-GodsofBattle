@@ -46,7 +46,7 @@ class Jogador:
     def __str__(self):
         return f"Jogador {self.id_jogador}: Vida={self.vida}, Ataque={self.ataque}, Resistencia={self.resistencia}, Habilidade={self.habilidade}, Missao Ativa={self.missao_ativa}"
 
-    def __init__(self, id_jogador, vida, ataque, resistencia, habilidade, missao_ativa=None):
+    def __init__(self, id_jogador, vida, ataque, resistencia, habilidade, moedas, missao_ativa=None):
         self.id_jogador = id_jogador
         self.vida = vida
         self.ataque = ataque
@@ -145,11 +145,25 @@ class Arena:
         self.adversarios = adversarios
         self.connection = connection
         self.treinadores = []
+
+    
+    def exibir_status_jogador(self):
+        jogador_details = DataBase.get_player_details(self.connection, self.jogador)
+        if jogador_details:
+            print(f"\n Detalhes do Jogador:\n")
+            print(f"Id: {jogador_details[0]}")
+            print(f"Vida: {jogador_details[1]}")
+            print(f"Ataque: {jogador_details[2]}")
+            print(f"Resistência: {jogador_details[3]}\n")
+        else:
+            print("Erro ao obter detalhes do jogador.")
   
 
     def iniciar_desafio(self):
-        print("Bem-vindo à Arena do Reino dos Pebleus!")
-        print("Escolha uma opção:")
+
+        print("Bem-vindo à Arena do Distrito de Barro!")
+        DataBase.get_arena_details(self.connection, 4)
+        print("\nEscolha uma opção:")
         print("1 - Lutar contra um adversário")
         print("2 - Treinar com um mestre")
         print("3 - Ver status do jogador")
@@ -160,20 +174,10 @@ class Arena:
         if escolha == "1":
             self.iniciar_batalha()
         elif escolha == "2":
-            self.treinar_com_mestre()
+            print("Faça sua primeira batalha para desbloquear o treinamento com os mestres!")
+            self.iniciar_desafio()
         elif escolha == "3":
-            def exibir_status_jogador(self):
-                jogador_details = DataBase.get_player_details(self.connection, self.jogador_id)
-                if jogador_details:
-                    print(f"Detalhes do Jogador:\n")
-                    print(f"Id: {jogador_details[0]}")
-                    print(f"Vida: {jogador_details[1]}")
-                    print(f"Ataque: {jogador_details[2]}")
-                    print(f"Resistência: {jogador_details[3]}")
-
-                else:
-                    print("Erro ao obter detalhes do jogador.")
-                    
+            self.exibir_status_jogador()
             self.iniciar_desafio()
         elif escolha == "4":
             print("Saindo da Arena...")
@@ -200,7 +204,6 @@ class Arena:
             self.treinar_com_mestre()
 
     def iniciar_batalha(self):
-        # Lógica para iniciar uma batalha
         # Pode escolher um adversário aleatório ou permitir ao jogador escolher
         adversario = self.escolher_adversario_missao()  # Adicione esta linha
         batalha = Batalha(self.jogador, adversario)
