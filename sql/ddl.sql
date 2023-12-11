@@ -75,7 +75,7 @@ begin;
         Resistencia INT,
         Habilidade INT,
         Id_Local INT,
-        Id_Missao INT,
+        Id_Missao INT default 1,
         FOREIGN KEY (Id_Local) REFERENCES Local(Id_Local),
         FOREIGN KEY (Id_Missao) REFERENCES Missao(Id_Missao)
     );

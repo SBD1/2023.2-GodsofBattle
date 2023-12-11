@@ -27,7 +27,7 @@ class DataBase:
     def create_new_player(connection):
         query = "INSERT INTO Jogador (Vida, Ataque, Resistencia, Habilidade, Id_Local, Id_Missao) VALUES (%s, %s, %s, %s, %s, %s) RETURNING Id_Jogador;"
         # Remova o valor para Id_Jogador, pois ele será gerado automaticamente
-        params = (100, 20, 10, 5, 1, 1)
+        params = (100, 20, 1, 5, 1, 1)
 
         # Execute a consulta e obtenha o ID do jogador recém-criado
         player_id = DataBase.execute_query(connection, query, params, fetchone=True)
@@ -67,11 +67,17 @@ class DataBase:
         else:
             return False  # Indica que o jogador não tem moedas suficientes para treinar
 
+    
+    @staticmethod
+    def get_adversario_atual(connection, jogador_id):
+        query = "SELECT Id_Adversario FROM Missao WHERE Id_Missao = (SELECT Id_Missao FROM Jogador WHERE Id_Jogador = %s) ;"
+        params = (jogador_id,)
+        adversario_id = DataBase.execute_query(connection, query, params, fetchone=True)
+        return adversario_id[0] if adversario_id else None
 
     @staticmethod
     def get_adversario_details(connection, adversario_id):
         # Lógica para obter detalhes do adversário com base no ID
-        # Substitua isso pela lógica real de consulta ao banco de dados
         query = f"SELECT * FROM Adversario WHERE Id_Adversario = {adversario_id}"
         cursor = connection.cursor()
         cursor.execute(query)
@@ -81,13 +87,11 @@ class DataBase:
     @staticmethod
     def get_arena_details(connection, arena_id):
         # Lógica para obter detalhes da arena com base no ID
-        # Substitua isso pela lógica real de consulta ao banco de dados
         query = f"SELECT Descricao FROM Local WHERE Id_Local = {arena_id}"
         cursor = connection.cursor()
         cursor.execute(query)
         detalhes_arena = cursor.fetchone()
         print(f"{detalhes_arena[0]}")
-
 
 
     @staticmethod
