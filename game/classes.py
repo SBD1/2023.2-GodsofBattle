@@ -56,6 +56,9 @@ class Jogador:
         self.inventario = Inventario()
         self.moedas = moedas
 
+    def get_ataque(self):
+        return self.ataque
+
     def adicionar_instancia_item(self, instancia_item):
         self.inventario.adicionar_instancia_item(instancia_item)
 
@@ -125,11 +128,6 @@ class Treinador(NPC):
             print("Você não tem moedas suficientes para treinar.")
 
 
-    def treinar_jogador(self, jogador, habilidade):
-        # Lógica para treinar o jogador
-        pass
-
-
 class Inventario:
     def __init__(self):
         self.capacidade = 10
@@ -140,11 +138,12 @@ class Inventario:
         self.instancias_itens.append(instancia_item)
 
 class Arena:
-    def __init__(self, jogador, adversarios, connection):
-        self.jogador = jogador
+    def __init__(self, jogador_id, adversarios, connection):
+        self.jogador_id = jogador_id
         self.adversarios = adversarios
         self.connection = connection
         self.treinadores = []
+        self.data_base = DataBase()
 
     
     def exibir_status_jogador(self):
@@ -175,7 +174,7 @@ class Arena:
         escolha = input("Escolha uma opção: ")
 
         if escolha == "1":
-            self.iniciar_batalha()
+            self.iniciar_batalha(self.jogador_id)
         elif escolha == "2":
             print("Faça sua primeira batalha para desbloquear o treinamento com os mestres!")
             self.iniciar_desafio()
@@ -188,6 +187,56 @@ class Arena:
             print("Opção inválida. Tente novamente.")
             self.iniciar_desafio()
 
+
+    def iniciar_batalha(self, jogador_id):
+        adversario = self.escolher_adversario()
+        if adversario is None:
+            print("Você decidiu sair da Arena. Até a próxima!")
+            return
+
+        jogador_details = self.data_base.get_player_details(self.connection, jogador_id)  # Atualize esta linha
+        jogador = Jogador(jogador_details[0], jogador_details[1], jogador_details[2], jogador_details[3], jogador_details[4], jogador_details[5])  # Adicione esta linha
+        print(f"Jogador: {jogador}")
+        batalha = Batalha(jogador_id, adversario, self.connection)
+        print("Batalha iniciada!")
+
+        while True:
+            try:
+                acao = int(input("Escolha uma ação (1 para atacar, 2 para defender, 3 para desistir): "))
+            except ValueError:
+                print("Entrada inválida. Por favor, insira um número.")
+                return
+            if acao == 1:
+                print(f"Antes de atacar - Vida do adversário: {adversario.vida}")
+                derrotou_adversario = batalha.atacar(jogador, adversario)  # Atualize esta linha
+                if derrotou_adversario:
+                    break
+                print(f"Depois de atacar - Vida do adversário: {adversario.vida}")
+            elif acao == 2:
+                # Adicione lógica para ação de defesa
+                pass
+            elif acao == 3:
+                print("Você desistiu da batalha. Até a próxima!")
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
+    
+    def escolher_adversario(self):
+        detalhes_adversario = self.data_base.escolher_adversario_missao(self.connection)
+
+        if detalhes_adversario is None:
+            print("Não foi possível encontrar um adversário para a missão.")
+        else:
+            print(f"Você vai enfrentar {detalhes_adversario.descricao}!")
+
+            return detalhes_adversario
+    
+    def escolher_adversario_missao(self):
+        missao = DataBase.get_missao_details(self.connection, 1)
+        id_adversario = missao[4]
+        detalhes_adversario = DataBase.get_adversario_details(self.connection, id_adversario)
+        return detalhes_adversario if detalhes_adversario else None
+
     def treinar_com_mestre(self):
         print("Escolha um mestre para treinar:")
         for i, treinador in enumerate(self.treinadores, start=1):
@@ -198,66 +247,11 @@ class Arena:
             if 1 <= escolha_treinador <= len(self.treinadores):
                 treinador_escolhido = self.treinadores[escolha_treinador - 1]
                 treinador_escolhido.treinar_jogador(self.jogador)
-                self.iniciar_desafio()
             else:
                 print("Escolha inválida. Tente novamente.")
-                self.treinar_com_mestre()
         except ValueError:
             print("Entrada inválida. Por favor, insira um número.")
-            self.treinar_com_mestre()
 
-    def iniciar_batalha(self):
-        # Pode escolher um adversário aleatório ou permitir ao jogador escolher
-        adversario = self.escolher_adversario_missao()  # Adicione esta linha
-        batalha = Batalha(self.jogador, adversario)
-        batalha.iniciar()
-        print(f"Você está enfrentando: {adversario[1]}")
-        print("Escolha uma ação:")
-        print("1 - Atacar")
-        print("2 - Defender")
-        print("3 - Desistir")
-
-        escolha = input("Escolha uma opção: ")
-
-        if escolha == "1":
-            derrotou_adversario = Comandos.atacar(self.jogador, adversario)
-            if derrotou_adversario:
-                # Lógica para o jogador vencer a batalha
-                pass
-            else:
-                # Lógica para permitir que o adversário contra-ataque
-                pass
-        elif escolha == "2":
-            Comandos.defender(self.jogador)
-            # Lógica para permitir que o adversário ataque enquanto o jogador está defendendo
-        elif escolha == "3":
-            print("Você desistiu da batalha.")
-            # Lógica para sair da batalha
-        else:
-            print("Opção inválida. Tente novamente.")
-            self.iniciar_batalha()
-
-
-
-    def escolher_adversario_missao(self):
-        missao = DataBase.get_missao_details(self.connection, 1)
-        id_adversario = missao[4]
-        detalhes_adversario = DataBase.get_adversario_details(self.connection, id_adversario)
-        return detalhes_adversario
-
-    def treinar_com_mestre(self):
-        print("Escolha um treinador para treinar:")
-        for i, treinador in enumerate(self.treinadores, start=1):
-            print(f"{i}. {treinador.nome}")
-
-        escolha_treinador = int(input("Escolha um treinador (digite o número): "))
-        if 1 <= escolha_treinador <= len(self.treinadores):
-            treinador_escolhido = self.treinadores[escolha_treinador - 1]
-            treinador_escolhido.treinar_jogador(self.jogador)
-            self.iniciar_desafio()
-        else:
-            print("Escolha inválida. Tente novamente.")
-            self.treinar_com_mestre()
 
 class Comandos:
     @staticmethod
@@ -283,11 +277,75 @@ class Comandos:
     # Adicione mais métodos para outros comandos, se necessário
 
 class Batalha:
-    def __init__(self, jogador, adversarios):
-        self.jogador = jogador
+    def __init__(self, jogador_id, adversarios, connection):
+        self.jogador_id = jogador_id
         self.adversarios = adversarios
+        self.connection = connection
+
+        if isinstance(adversarios, list):
+            # Se houver uma lista de adversários, escolha um aleatoriamente
+            self.adversario = random.choice(adversarios)
+        else:
+            # Caso contrário, assuma que adversarios é um único adversário
+            self.adversario = adversarios
+    def atacar(self, jogador, adversario):
+        # Lógica para ataque
+        dano = jogador.get_ataque() - adversario.resistencia
+
+        adversario.vida -= dano
+        print(f"Você ataca o adversário e causa {dano} de dano!")
+
+        if adversario.vida <= 0:
+            print("Você derrotou o adversário!")
+            return True  # Indica que o adversário foi derrotado
+        else:
+            print(f"O adversário agora tem {adversario.vida} de vida.")
+            return False  # Indica que o adversário ainda está vivo
+
+    def defender(self, jogador):
+        # Lógica para defesa
+        jogador.resistencia += 5
+        print("Você está se defendendo. Sua resistência aumentou!")
 
     def iniciar(self):
         print("Batalha iniciada!")
 
-    # Adicione métodos relevantes para a lógica de batalha, como ataques, defesas, etc.
+        while True:
+            print("Escolha uma ação:")
+            print("1 - Atacar")
+            print("2 - Defender")
+            print("3 - Desistir")
+
+            escolha = input("Escolha uma opção: ")
+
+            if escolha == "1":
+                derrotou_adversario = self.atacar(jogador, self.adversario)
+
+                if derrotou_adversario:
+                    # Lógica para o jogador vencer a batalha
+                    print("Você venceu a batalha!")
+                    break
+                else:
+                    # Lógica para permitir que o adversário contra-ataque
+                    self.contra_ataque()
+            elif escolha == "2":
+                self.defender(self.jogador)
+                # Lógica para permitir que o adversário ataque enquanto o jogador está defendendo
+                self.contra_ataque()
+            elif escolha == "3":
+                print("Você desistiu da batalha.")
+                # Lógica para sair da batalha
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
+
+    def contra_ataque(self):
+        # Lógica para o adversário contra-atacar
+        dano_adversario = self.adversario.ataque - self.jogador.resistencia
+        self.jogador.vida -= dano_adversario
+        print(f"O adversário contra-ataca e causa {dano_adversario} de dano!")
+
+        if self.jogador.vida <= 0:
+            print("Você foi derrotado!")
+        else:
+            print(f"Você agora tem {self.jogador.vida} de vida.")

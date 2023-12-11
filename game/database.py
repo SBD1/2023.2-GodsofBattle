@@ -88,6 +88,29 @@ class DataBase:
         detalhes_arena = cursor.fetchone()
         print(f"{detalhes_arena[0]}")
 
+
+
+    @staticmethod
+    def escolher_adversario_missao(connection):
+        from classes import Adversario
+       
+        missao = DataBase.get_missao_details(connection, 1)
+        id_adversario = missao[4]
+        detalhes_adversario = DataBase.get_adversario_details(connection, id_adversario)
+
+        # Certifique-se de que a estrutura da tabela Adversario está correta
+        if detalhes_adversario:
+            id_adversario = detalhes_adversario[0]
+            vida = detalhes_adversario[1]
+            ataque = detalhes_adversario[2]
+            resistencia = detalhes_adversario[3]
+            descricao = detalhes_adversario[4]
+
+            adversario = Adversario(id_adversario, vida, ataque, resistencia, descricao)
+            return adversario
+
+        return None
+
 #Testando a classe de criar jogador já com o inventário acoplado.
 
     
