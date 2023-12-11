@@ -52,6 +52,12 @@ class DataBase:
         DataBase.execute_query(connection, query, params)
 
     @staticmethod
+    def missao_concluida(connection, jogador_id):
+        query = "UPDATE Jogador SET Id_Missao = (SELECT Id_Missao FROM Missao WHERE Id_MissaoRequisito = Jogador.Id_Missao) WHERE Id_Jogador = %s;"
+        params = (jogador_id,)
+        DataBase.execute_query(connection, query, params)
+
+    @staticmethod
     def treinar_com_mestre(connection, jogador_id, custo_treinamento):
         # Verifique se o jogador tem moedas suficientes para treinar
         jogador_detalhes = DataBase.get_player_details(connection, jogador_id)

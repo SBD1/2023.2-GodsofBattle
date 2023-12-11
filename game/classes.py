@@ -258,6 +258,7 @@ class Batalha:
 
         if adversario.vida <= 0:
             print(f"Você derrotou o {adversario.descricao}!")
+            DataBase.missao_concluida(self.connection, jogador.id_jogador)
             return True  # Indica que o adversário foi derrotado
         else:
             print(f"O adversário agora tem {adversario.vida} de vida.\n")
