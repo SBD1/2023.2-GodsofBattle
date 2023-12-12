@@ -41,5 +41,40 @@ Portanto, prepare-se para uma experiência de jogo envolvente, repleta de desafi
   - [dml](docs/dml.sql)
   - [Querrys](docs/Querrys.sql)
   - [Apresentação Módulo 2](https://youtu.be/OiPhV-xbBik)
+
+- Módulo 3
+
+  - [Desenvolvimento do jogo](game/game.py)
+  - [correções](docs/normalizacao/normalizacao-projeto.md)
+  - [Apresentação Módulo 3](https://unbbr.sharepoint.com/sites/SBD1-GodsofBattle/Documentos%20Compartilhados/General/Recordings/Reunião%20em%20Geral-20231212_004925-Meeting%20Recording.mp4)
+
+## Instalação 
+**Linguagem**: Python<br>
+
+
+**Dependências**
+- Python 3.9.0 ou superior
+- instalar as bibliotecas necessárias.
+- docker
+  
+**Execução**
+- Clone o projeto (ou baixe):
+  
+  ```shell
+  git clone https://github.com/SBD1/2023.2-GodsofBattle
+  && docker compose build
+  && docker compose up -d
+  && cd game
+
+
+
+  ```
+
+ 
+ - Execute o arquivo principal ```game.py```:
+  
+    ```shell
+    python3 game.py
+    ```
   
   
