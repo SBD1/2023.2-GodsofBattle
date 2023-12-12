@@ -1,6 +1,7 @@
 #classes.py
 
 from database import DataBase
+from game import *
 import random
 import psycopg2
 
@@ -58,6 +59,9 @@ class Jogador:
 
     def get_ataque(self):
         return self.ataque
+    
+    def get_especial(self):
+        return self.habilidade.especial
 
     def adicionar_instancia_item(self, instancia_item):
         self.inventario.adicionar_instancia_item(instancia_item)
@@ -66,11 +70,6 @@ class Jogador:
         self.habilidade += 1  # Aumenta a habilidade do jogador
         print(f"Sua habilidade agora é {self.habilidade}.")
         pass
-
-
-    def adicionar_instancia_item(self, instancia_item):
-        # Lógica para adicionar uma instância de item ao inventário
-        self.inventario.adicionar_instancia_item(instancia_item)
 
 
 class Adversario:
@@ -105,7 +104,7 @@ class Missao:
         self.descricao_missao = descricao_missao
         self.status = status
         self.id_adversario = id_adversario
-        self.id_missao_requisito = id_missao_requisitoS
+        self.id_missao_requisito = id_missao_requisito
  
 
 class Treinador(NPC):
@@ -162,6 +161,64 @@ class Arena:
 
         print("Bem-vindo à Arena do Distrito de Barro!")
         DataBase.get_arena_details(self.connection, 4)
+        while True:
+            print("\nEscolha uma opção:")
+            print("1 - Lutar contra um adversário")
+            print("2 - Treinar com um mestre")
+            print("3 - Ver status do jogador")
+            print("4 - Sair da Arena")
+
+            escolha = input("Escolha uma opção: ")
+
+            if escolha == "1":
+                vitoria = self.iniciar_batalha(self.jogador_id)
+                if vitoria:
+                    return True
+            elif escolha == "2":
+                print("\nFaça sua primeira batalha para desbloquear o treinamento com os mestres!\n")
+                pass
+            elif escolha == "3":
+                self.exibir_status_jogador()
+                pass
+            elif escolha == "4":
+                print("Saindo da Arena...")
+                pass
+            else:
+                print("Opção inválida. Tente novamente.")
+                pass
+
+    def arena_de_barro(self):
+        while True:
+            print("Bem-vindo à Arena do Distrito de Barro!")
+            DataBase.get_arena_details(self.connection, 4)
+            print("\nEscolha uma opção:")
+            print("1 - Lutar contra um adversário")
+            print("2 - Treinar com um mestre")
+            print("3 - Ver status do jogador")
+            print("4 - Sair da Arena")
+
+            escolha = input("Escolha uma opção: ")
+
+            if escolha == "1":
+                vitoria = self.iniciar_batalha(self.jogador_id)
+                if vitoria:
+                    return True            
+            elif escolha == "2":
+                print("\nFuncionalidade de treino ainda não está pronta\n")
+                pass
+            elif escolha == "3":
+                self.exibir_status_jogador()
+                pass
+            elif escolha == "4":
+                self.midgame()
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
+                pass
+
+    def arena_de_prata(self):
+        print("Bem-vindo à Arena do Distrito de Prata!")
+        DataBase.get_arena_details(self.connection, 5)
         print("\nEscolha uma opção:")
         print("1 - Lutar contra um adversário")
         print("2 - Treinar com um mestre")
@@ -171,19 +228,47 @@ class Arena:
         escolha = input("Escolha uma opção: ")
 
         if escolha == "1":
-            self.iniciar_batalha(self.jogador_id)
+            vitoria = self.iniciar_batalha(self.jogador_id)
+            if vitoria:
+                return True
         elif escolha == "2":
-            print("\nFaça sua primeira batalha para desbloquear o treinamento com os mestres!\n")
-            self.iniciar_desafio()
+            print("\nFuncionalidade de treino ainda não está pronta\n")
+            pass
         elif escolha == "3":
             self.exibir_status_jogador()
-            self.iniciar_desafio()
+            pass
         elif escolha == "4":
-            print("Saindo da Arena...")
+            self.midgame()
         else:
             print("Opção inválida. Tente novamente.")
-            self.iniciar_desafio()
+            pass
 
+    def arena_de_ouro(self):
+        print("Bem-vindo à Arena do Distrito de Ouro!")
+        DataBase.get_arena_details(self.connection, 2)
+        print("\nEscolha uma opção:")
+        print("1 - Lutar contra um adversário")
+        print("2 - Treinar com um mestre")
+        print("3 - Ver status do jogador")
+        print("4 - Sair da Arena")
+
+        escolha = input("Escolha uma opção: ")
+
+        if escolha == "1":
+            vitoria = self.iniciar_batalha(self.jogador_id)
+            if vitoria:
+                return True
+        elif escolha == "2":
+            print("\nFuncionalidade de treino ainda não está pronta\n")
+            pass
+        elif escolha == "3":
+            self.exibir_status_jogador()
+            pass
+        elif escolha == "4":
+            return False
+        else:
+            print("Opção inválida. Tente novamente.")
+            pass
 
     def iniciar_batalha(self, jogador_id):
         adversario_details = self.data_base.get_adversario_details(self.connection, self.data_base.get_adversario_atual(self.connection, self.jogador_id))  # Retorna detalhes do adversario atual
@@ -201,13 +286,19 @@ class Arena:
 
         while True:
             try:
+                especial = 0
                 acao = int(input("Escolha uma ação (1 para atacar, 2 para defender, 3 para desistir): "))
             except ValueError:
                 print("Entrada inválida. Por favor, insira um número.")
             if acao == 1:
                 print(f"Antes de atacar - Vida do adversário: {adversario.vida}")
-                derrotou_adversario = batalha.atacar(jogador, adversario)  # Atualize esta 
+                derrotou_adversario = batalha.atacar(jogador, adversario)  # Atualize esta
+                especial += 1 
                 if derrotou_adversario:
+                    DataBase.missao_concluida(self.connection, jogador.id_jogador)
+                    DataBase.upar_jogador(self.connection, jogador.id_jogador)
+                    print("Você venceu a batalha! Você fica um pouco mais forte")
+                    return True
                     break
                 adversario_atacou = batalha.contra_ataque(jogador, adversario)  # Atualize esta linha
                 if adversario_atacou:
@@ -218,13 +309,27 @@ class Arena:
                 if adversario_atacou:
                     break
                 pass
-
+            
             elif acao == 3:
                 print("Você desistiu da batalha. Até a próxima!")
                 break
-            else:
-                print("Opção inválida. Tente novamente.")
-    
+
+            elif acao == 4:
+                if especial > 4:
+                    print(f"Antes de atacar - Vida do adversário: {adversario.vida}")
+                    derrotou_adversario = batalha.especial(jogador, adversario)  # Atualize esta
+                    especial = 0
+
+                    if derrotou_adversario:
+                        DataBase.missao_concluida(self.connection, jogador.id_jogador)
+                        print("Você venceu a batalha! Você fica um pouco mais forte")
+                        
+                        return True
+                        break
+                    adversario_atacou = batalha.contra_ataque(jogador, adversario)  # Atualize esta linha
+
+                    if adversario_atacou:
+                        break
 
     def treinar_com_mestre(self):
         print("Escolha um mestre para treinar:")
@@ -258,7 +363,19 @@ class Batalha:
 
         if adversario.vida <= 0:
             print(f"Você derrotou o {adversario.descricao}!")
-            DataBase.missao_concluida(self.connection, jogador.id_jogador)
+            return True  # Indica que o adversário foi derrotado
+        else:
+            print(f"O adversário agora tem {adversario.vida} de vida.\n")
+            return False  # Indica que o adversário ainda está vivo
+    
+    def especial(self, jogador, adversario):
+        dano = jogador.get_especial() - adversario.resistencia
+
+        adversario.vida -= dano
+        print(f"Você usou um esepcial no adversário e causa {dano} de dano!")
+
+        if adversario.vida <= 0:
+            print(f"Você derrotou o {adversario.descricao}!")
             return True  # Indica que o adversário foi derrotado
         else:
             print(f"O adversário agora tem {adversario.vida} de vida.\n")
@@ -274,9 +391,16 @@ class Batalha:
             print("3 - Desistir\n")
 
             escolha = input("Escolha uma opção: ")
+            cont_ataque = 0
+            especial = 0
 
             if escolha == "1":
-                derrotou_adversario = self.atacar(jogador, self.adversario)
+                derrotou_adversario = self.atacar(Jogador, self.adversario)
+                cont_ataque += 1
+
+                if cont_ataque > 3:
+                    especial += 1
+                    cont_ataque = 0
 
                 if derrotou_adversario:
                     # Lógica para o jogador vencer a batalha
@@ -287,12 +411,28 @@ class Batalha:
                     self.contra_ataque()
             elif escolha == "2":
                 self.defender(self.jogador)
+                especial += 1
                 # Lógica para permitir que o adversário ataque enquanto o jogador está defendendo
                 self.contra_ataque()
             elif escolha == "3":
                 print("Você desistiu da batalha.")
                 # Lógica para sair da batalha
                 break
+#            elif escolha == "4":
+#                if especial > 4:
+#                    derrotou_adversario = self.especial(Jogador, self.adversario)
+#
+#                    especial = 0
+#
+#                    if derrotou_adversario:
+#                        # Lógica para o jogador vencer a batalha
+#                        print("Você venceu a batalha!")
+#                        break
+#                    else:
+#                        # Lógica para permitir que o adversário contra-ataque
+#                        self.contra_ataque()
+#                else:
+#                    print("Você ainda não consegue utilizar o especial")
             else:
                 print("Opção inválida. Tente novamente.")
 
@@ -320,3 +460,6 @@ class Batalha:
         else:
             print(f"Você agora tem {jogador.vida} de vida.\n")
             return False  # Indica que o jogador ainda está vivo
+
+
+

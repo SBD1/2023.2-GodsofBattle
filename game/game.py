@@ -15,6 +15,7 @@ class Game:
         self.cursor = self.connection.cursor()
 
 
+
     def logo(self):
         print("\n " * 10)
         print("   ______                _     _                   _          _____                                                 _           ")
@@ -38,6 +39,40 @@ class Game:
         print("3 - Ajuda")
         print("4 - Sair")
 
+
+    def midgame(self):
+        adversario = DataBase.get_adversario_atual(self.connection, self.jogador_id)
+        adversario_details = DataBase.get_adversario_details(self.connection, adversario)
+        arenaObj = Arena(self.jogador_id, [adversario_details], self.connection)
+        print("Para onde deseja ir?")
+        print("1 - Distrito de Barro")
+        print("2 - Distrito de Prata")
+        print("3 - Distrito de Ouro")
+        escolha = input(">> ")
+        if escolha == "1":
+            vitoria = arenaObj.arena_de_barro()
+            if vitoria:
+                self.midgame()
+        elif escolha == "2":
+            if 6 <= adversario_details[0] <= 10:
+                vitoria = arenaObj.arena_de_prata()
+                if vitoria:
+                    self.midgame()
+            else:
+                print("Você não pode ir para o distrito de prata ainda, derrote mais adversários!")
+                self.midgame()
+        elif escolha == "3":
+            if 11 <= adversario_details[0] <= 15:
+                vitoria = arenaObj.arena_de_ouro()
+                if vitoria:
+                    self.midgame()
+            else:
+                print("Você não pode ir para o distrito de ouro ainda, derrote mais adversários!")
+                self.midgame()
+        else:
+            print("Opção inválida. Tente novamente.")
+            self.midgame()
+
     def iniciar_jogo(self):
         print("Iniciando o jogo...\n")
 
@@ -55,12 +90,22 @@ class Game:
         print("Você vai em direção da nova estrutura chamativa construida no meio do distrito de barro.\n")
 
         arena_pebleus = Arena(self.jogador_id, [detalhes_adversario], self.connection)
-        arena_pebleus.iniciar_desafio()
+        vitoria = arena_pebleus.iniciar_desafio()
+        if vitoria:
+            self.midgame()
+        else:
+            self.midgame()
+        
+
+
 
 if __name__ == "__main__":
     game_instance = Game()  
     game_instance.logo()
     game_instance.apresentacao()
+
+    def ajudaFunc():
+        print("A mecanica do jogo é bem simples, todas as ações são feitas através da escolha de opções.\n")
 
     escolha = input(">> ")
 
@@ -69,8 +114,12 @@ if __name__ == "__main__":
     elif escolha == "2":
         print("Carregando Jogo... (funcionalidade ainda não implementada)\n")
     elif escolha == "3":
-        print("Ajuda... (funcionalidade ainda não implementada)\n")
+        ajudaFunc()
+        game_instance.iniciar_jogo()
     elif escolha == "4":
         print("Saindo do Jogo...\n")
+        cursor.close()
+        connection.close()
     else:
         print("Opção inválida. Saindo do Jogo...")
+

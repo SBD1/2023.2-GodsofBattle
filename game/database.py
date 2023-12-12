@@ -57,6 +57,24 @@ class DataBase:
         params = (jogador_id,)
         DataBase.execute_query(connection, query, params)
 
+    def upar_jogador(connection, jogador_id):
+         # Obtenha os detalhes do jogador
+        jogador_detalhes = DataBase.get_player_details(connection, jogador_id)
+        vida_jogador = jogador_detalhes[1]
+        ataque_jogador = jogador_detalhes[2]
+        res_jogador = jogador_detalhes[3]
+
+         # Calcule o novo valor de vida, ataque e resistência
+        novo_vida = vida_jogador + 10
+        novo_ataque = ataque_jogador + 5
+        novo_res = res_jogador + 1
+
+         # Atualize os valores de vida, ataque e resistência do jogador
+        query = "UPDATE Jogador SET Vida = %s, Ataque = %s, Resistencia = %s WHERE Id_Jogador = %s;"
+        params = (novo_vida, novo_ataque, novo_res, jogador_id)
+        DataBase.execute_query(connection, query, params)
+
+
     @staticmethod
     def treinar_com_mestre(connection, jogador_id, custo_treinamento):
         # Verifique se o jogador tem moedas suficientes para treinar
